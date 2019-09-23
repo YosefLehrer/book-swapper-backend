@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-yosef = User.create(user_name: "yoseflehrer", password: "12345678")
-harry = Book.create(title: "Harry Potter", author: "Rolling Stones", ISBN: 12345678, img: "iaaksdiu")
-joinedbook = OwnedBook.create(book_id: Book.all.first.id, user_id: User.all.first.id)
+yosef = User.create(user_name: "test", password: "test")
+# yosef = User.create(user_name: "yoseflehrer", password: "12345678")
+# harry = Book.create(title: "Harry Potter", author: "Rolling Stones", ISBN: 12345678, img: "iaaksdiu")
+# joinedbook = OwnedBook.create(book_id: Book.all.first.id, user_id: User.all.first.id)

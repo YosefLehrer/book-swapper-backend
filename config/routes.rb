@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :owned_books, :books, :users, except: [:index]
+  resources :owned_books, :books, :users
   
+  get "/books/search/q=:searchTerm", to: "books#search"
   post "/login", to: "auth#login"
-  post "/autologin", to: "auth#autologin"
+  get '/autologin', to: 'auth#autologin'
 end
