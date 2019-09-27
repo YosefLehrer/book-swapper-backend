@@ -2,7 +2,7 @@ class OwnedBooksController < ApplicationController
     def create
         token = params["user_token"]
         user_id = JWT.decode(token, ENV["JWT_SECRET"])[0]["userId"]
-        book = Book.find_by(googleid: book_params["googleid"])
+        book = Book.find_by(googleid: params["book"]["googleid"])
         if book
             foundOwnedBook = OwnedBook.find_by(user_id: user_id)
             if foundOwnedBook
