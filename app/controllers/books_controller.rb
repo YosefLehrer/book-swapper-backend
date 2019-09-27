@@ -25,7 +25,11 @@ class BooksController < ApplicationController
 
     def show
         book = Book.find_by(googleid: params["id"])
-        usersArray = book.users.map {|user| user.user_name}
-        render json: usersArray
+        if book
+            usersArray = book.users.map {|user| user.user_name}
+            render json: {users: usersArray}
+        else
+            render json: {users: "No users own this book"}
+        end
     end
 end
