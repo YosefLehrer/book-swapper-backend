@@ -9,12 +9,12 @@ class OwnedBooksController < ApplicationController
                 render json: {alreadyInLibrary: "This book is already in your library"}
             else
                 newOwnedBook = OwnedBook.create(book_id: book.id, user_id: user_id)
-                render json: book
+                render json: {successfullyAddedToLibrary: "successfully Added To Library"}
             end
         else
             newBook = Book.create(book_params)
             OwnedBook.create(book_id: newBook.id, user_id: user_id)
-            render json: newBook
+            render json: {successfullyAddedToLibrary: "successfully Added To Library"}
         end
     end
 
