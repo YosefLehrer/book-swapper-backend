@@ -16,7 +16,6 @@ class AuthController < ApplicationController
             user_id = JWT.decode(token, ENV["JWT_SECRET"])[0]["userId"]
             user = User.find(user_id)
             user_name = user["user_name"]
-            byebug
             render json: {user_name: user_name}
         else
             render json: {error: "Invalid username, password combo"}
