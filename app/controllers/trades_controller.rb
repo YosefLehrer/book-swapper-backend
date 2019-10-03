@@ -16,9 +16,11 @@ class TradesController < ApplicationController
 
   def accept_trade
     trade = Trade.find(params[:trade_id])
-    trade.owned_book.update(user_id: trade.requestee.user_id)
-    trade.requestee.update(user_id: trade.owned_book.user_id)
-    trade.destroy!()
+    requester_id = trade.owned_book.user_id
+    requestee_id = trade.requestee.user_id
+    trade.owned_book.update(user_id: requestee_id)
+    trade.requestee.update(user_id: requester_id)
+    trade.update(status: true)
     render json: {message: "Trade successful"}
   end
   
