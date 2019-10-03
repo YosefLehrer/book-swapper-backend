@@ -4,7 +4,7 @@ class OwnedBooksController < ApplicationController
         user_id = JWT.decode(token, ENV["JWT_SECRET"])[0]["userId"]
         book = Book.find_by(googleid: params["book"]["googleid"])
         if book
-            foundOwnedBook = OwnedBook.find_by(user_id: user_id)
+            foundOwnedBook = OwnedBook.find_by(user_id: user_id, book_id: book.id)
             if foundOwnedBook
                 render json: {alreadyInLibrary: "This book is already in your library"}
             else
@@ -14,8 +14,8 @@ class OwnedBooksController < ApplicationController
         else
             newBook = Book.create(book_params)
             OwnedBook.create(book_id: newBook.id, user_id: user_id)
-                render json: newBook
-            end
+            render json: newBook
+        end
     end
 
     private

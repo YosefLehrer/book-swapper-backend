@@ -13,10 +13,16 @@ class UsersController < ApplicationController
         token = request.headers['Authorization']
         user_id = JWT.decode(token, ENV["JWT_SECRET"])[0]["userId"]
         user = User.find(user_id)
-        render json: user.books
+        user_books = user.books
+        trades = Trade.all.select {|trade| trade.requestee.user.id == user_id}
+        book_from_trade = trades.map do |trade|
+            {owned_book: trade.owned_book.book, requestee: trade.requestee.book, trade_id: trade.id}
+        end
+        render json: {books: user_books, trades: book_from_trade}
     end
 
     private
+    
     def user_params
         params.require(:user).permit(:user_name, :password)
     end

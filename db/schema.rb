@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_25_135244) do
+ActiveRecord::Schema.define(version: 2019_10_02_140041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,16 @@ ActiveRecord::Schema.define(version: 2019_09_25_135244) do
     t.index ["user_id"], name: "index_owned_books_on_user_id"
   end
 
+  create_table "trades", force: :cascade do |t|
+    t.bigint "owned_book_id"
+    t.bigint "requestee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "status", default: false
+    t.index ["owned_book_id"], name: "index_trades_on_owned_book_id"
+    t.index ["requestee_id"], name: "index_trades_on_requestee_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "user_name"
     t.string "password_digest"
@@ -48,4 +58,5 @@ ActiveRecord::Schema.define(version: 2019_09_25_135244) do
 
   add_foreign_key "owned_books", "books"
   add_foreign_key "owned_books", "users"
+  add_foreign_key "trades", "owned_books"
 end
