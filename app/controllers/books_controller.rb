@@ -41,17 +41,19 @@ class BooksController < ApplicationController
         list = body["results"]["lists"]
         
         fiction = list.find{|obj| obj["list_name_encoded"] == "hardcover-fiction"}["books"].map do |book|
-            uri = URI.parse("https://www.googleapis.com/books/v1/volumes?q=#{book["title"]}")
-            response = Net::HTTP.get_response(uri)
-            body = JSON.parse(response.body)
-            self.create_book_object(body["items"][0])
+            {
+                title: book["title"],
+                author: book["author"] ? book["author"] : "Author not found",
+                img: book["book_image"] ? book["book_image"]: "https://cdn2.iconfinder.com/data/icons/unigrid-phantom-multimedia-vol-6/60/020_256_rules_do_not_list_book_history_education_study_learn_knowledge-128.png",
+            }
         end
 
         hardcover_nonfiction = list.find{|obj| obj["list_name_encoded"] == "hardcover-nonfiction"}["books"].map do|book|
-            uri = URI.parse("https://www.googleapis.com/books/v1/volumes?q=#{book["title"]}")
-            response = Net::HTTP.get_response(uri)
-            body = JSON.parse(response.body)
-            self.create_book_object(body["items"][0])
+            {
+                title: book["title"],
+                author: book["author"] ? book["author"] : "Author not found",
+                img: book["book_image"] ? book["book_image"]: "https://cdn2.iconfinder.com/data/icons/unigrid-phantom-multimedia-vol-6/60/020_256_rules_do_not_list_book_history_education_study_learn_knowledge-128.png",
+            }
         end
 
         render json: {fiction: fiction, nonfiction: hardcover_nonfiction}
